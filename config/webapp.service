@@ -1,0 +1,18 @@
+[Unit]
+Description=Web Application Backend
+After=network.target
+
+[Service]
+Type=simple
+User=webapp
+Group=webapp
+WorkingDirectory=/opt/webapp
+ExecStart=/usr/bin/python3 /opt/webapp/app.py
+Restart=on-failure
+RestartSec=5
+
+StandardOutput=append:/var/log/webapp/app.log
+StandardError=append:/var/log/webapp/app.log
+
+[Install]
+WantedBy=multi-user.target
