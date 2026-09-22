@@ -35,7 +35,24 @@ Below is the order of execution of the main processes when the master script (pr
 
 ![image](images/order.PNG)
 
+## Results
+
 Below shows the succesful running of the scripts with each of the steps been completed from the begining to the end
 
 ![image](images/verify.png)
+
+Below shows the application logs with status 
+
+![image](images/applog.png)
+
+and then the provision logs from [2026-09-20 21:31:39] to 2026-09-22 11:09:03]
+
+![image](images/provlog1.png)
+![image](images/provlog2.png)
+![image](images/provlog3.png)
+![image](images/provlog4.png)
+
+## Conclusion
+
+The project demonstrates the bootsraping of a Linux server and the hosting of web application on it. This project was completed by automating every processes involved which supports Linux server administration at scale while equaly reducing administrative overhead. Likewise, the project integrates security with the app hosting by configuring a reverse proxy to serve as a frontend for the backend app, a firewall to allow only approved traffic, and fail2ban to prevent bruteforce attack against the Linux server. Additionally, log rotation allows the efficient usage of storage space while the logging of provisioning and app logs provide audit trail to support system montoring.
 
