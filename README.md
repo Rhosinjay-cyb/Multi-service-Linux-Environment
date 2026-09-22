@@ -27,47 +27,15 @@ Automating the configuration of a multi-service Linux environment to support the
 
 The project commenced with the installation of relevant component, including Nginx, flask and fail2ban. Then the script for each component were written alongside configuration files. Each of these scripts are then referenced in the main script (provision.sh) allowing a clean and les-complex script for the job. The project tree is shown below.
 
-MSE/
-├── provision.sh
-|
-│
-├── scripts/
-│   ├── common.sh
-│   ├── setup-user.sh
-│   ├── setup-backend.sh
-│   ├── setup-systemd.sh
-│   ├── setup-logrotate.sh
-│   ├── setup-nginx.sh
-│   ├── setup-firewall.sh
-│   ├── setup-fail2ban.sh
-│   └── verify.sh
-│
-├── backend/
-│   └── app.py
-│
-└── config/
-    ├── webapp.service
-    ├── webapp-logrotate
-    ├── nginx-webapp.conf
-    └── jail.local
+![image](images/tree.PNG)
 
 The script (provision.sh) is the main orchestrator of other scripts, common.sh contains the functions shared by the other scripts such as initialization of variables/project directories and confirmation of project prerequisites. The script (setup-user.sh) sets up a non-root and non-human user (webapp). The script (setup-backend.sh) and file  (webapp.service) are used for the configuration of the backend app (app.py) basically moving it from its folder to the application folder on the Linux server, configuring its logging and assigning the app ownership to early created non-root user (webapp). The script (setup-systemd.sh) is the daemon that mangages the app.py on the Linux server, It takes the backend application and makes it a persistent, automatically managed Linux service while webapp is the identity running it. Additionally, The script (setup-logrotate.sh) and file (webapp-logrotate) manages the app logs to prevent log files from growing infinetely. The script (setup-nginx.sh) and config file (nginx-webapp.conf) configures Nginx to receive web requests and forward them to backend app serving as a reverse proxy. The script (setup-firewall.sh) configures the Ubuntu firewall to control which network connections are allowed into your server, in this case all incoming traffic are denied while only SSH/22 and HTTP/80 are allowed, SSH allows remote accesss to the Linux server while HTTP allows the Nginx server on the Linux server to recieve web requests. The script (setup-fail2ban.sh) was primarily configured to protect the Linux server against repeated failed SSH logins by applying the rules specified in the file (jail.local). Lastly, the script (verify.sh) configures the verification of DNS resolution, the health of the backend and the connectivity of the Nginx web server to it. 
 
 Below is the order of execution of the main processes when the master script (provision.sh) is ran.
 
-Initialization of variable/confirmation of prerequisites
-     ↓
-Create non-root user (webapp)
-     ↓
-Install/configure application (app.py)
-     ↓
-Configure systemd
-     ↓
-Configure Nginx
-     ↓
-Configure firewall
-     ↓
-Configure fail2ban
-     ↓
-Test/Verification
+![image](images/order.PNG)
+
+Below shows the succesful running of the scripts with each of the steps been completed from the begining to the end
+
+![image](images/verify.png)
 
